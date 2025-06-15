@@ -75,84 +75,48 @@
     <button class="boton-menu" onclick="toggleOpcionesMenu()">📋 Ver menú</button>
 
     <div id="opciones-menu" class="menu-oculto">
-      <div class="categoria" onclick="mostrarSubmenu('cafes')">☕ Cafés</div>
-      <ul id="submenu-cafes" class="submenu">
-        <li>Espresso - $5.000</li>
-        <li>Capuchino - $6.500</li>
-        <li>Latte - $6.000</li>
-      </ul>
-
-      <div class="categoria" onclick="mostrarSubmenu('pasteleria')">🥐 Pastelería</div>
-      <ul id="submenu-pasteleria" class="submenu">
-        <li>Croissant - $4.000</li>
-        <li>Torta de chocolate - $6.500</li>
-        <li>Cheesecake - $7.000</li>
-      </ul>
-
-      <div class="categoria" onclick="mostrarSubmenu('tes')">🍵 Tés e Infusiones</div>
-      <ul id="submenu-tes" class="submenu">
-        <li>Té verde - $4.000</li>
-        <li>Manzanilla - $4.000</li>
-        <li>Infusión de frutas - $4.500</li>
-      </ul>
-
-      <div class="categoria" onclick="mostrarSubmenu('frias')">🧃 Bebidas Frías</div>
-      <ul id="submenu-frias" class="submenu">
-        <li>Jugo natural - $5.000</li>
-        <li>Limonada - $4.500</li>
-        <li>Té helado - $5.000</li>
-      </ul>
+      <!-- Se llenará dinámicamente con JS -->
     </div>
   </section>
+
   <header>
-  <div class="header-container">
-    <h1>El Libro y el Expreso</h1>
-    <button id="btn-domicilios" onclick="toggleDomicilios()">¡Pide tu domicilio aquí!</button>
-  </div>
-  <p>Un rincón para el café, los libros y el alma</p>
-</header>
+    <div class="header-container">
+      <h1>El Libro y el Expreso</h1>
+      <button id="btn-domicilios" onclick="toggleDomicilios()">¡Pide tu domicilio aquí!</button>
+    </div>
+    <p>Un rincón para el café, los libros y el alma</p>
+  </header>
 
-<!-- Tu sección de domicilios (puede ir justo antes del footer o donde quieras) -->
-<section id="domicilios" class="domicilios-oculto">
-  <h2>Formulario para domicilios</h2>
-  <form>
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required />
-
-    <label for="direccion">Dirección:</label>
-    <input type="text" id="direccion" name="direccion" required />
-
-    <label for="telefono">Teléfono:</label>
-    <input type="tel" id="telefono" name="telefono" required />
-    
+  <section id="domicilios" class="domicilios-oculto">
+    <h2>Formulario para domicilios</h2>
     <form id="form-domicilios">
-  <!-- Otros campos... -->
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required />
 
-  <label for="categoria">Selecciona categoría:</label>
-  <select id="categoria" name="categoria" required>
-    <option value="" disabled selected>-- Escoge una categoría --</option>
-    <option value="cafe">Café</option>
-    <option value="pasteleria">Pastelería</option>
-    <option value="tes">Tés e Infusiones</option>
-    <option value="bebidas">Bebidas Frías</option>
-  </select>
+      <label for="direccion">Dirección:</label>
+      <input type="text" id="direccion" name="direccion" required />
 
-  <label for="producto">Selecciona producto:</label>
-  <select id="producto" name="producto" required disabled>
-    <option value="" disabled selected>-- Escoge primero categoría --</option>
-  </select>
+      <label for="telefono">Teléfono:</label>
+      <input type="tel" id="telefono" name="telefono" required />
 
-  <button type="button" id="agregar-producto">Agregar producto</button>
+      <label for="categoria">Selecciona categoría:</label>
+      <select id="categoria" name="categoria" required>
+        <option value="" disabled selected>-- Escoge una categoría --</option>
+      </select>
 
-  <h3>Productos añadidos:</h3>
-  <ul id="lista-pedido"></ul>
+      <label for="producto">Selecciona producto:</label>
+      <select id="producto" name="producto" required disabled>
+        <option value="" disabled selected>-- Escoge primero categoría --</option>
+      </select>
 
-  <!-- Botón enviar -->
-  <button type="submit">Enviar pedido</button>
-</form>
+      <button type="button" id="agregar-producto">Agregar producto</button>
 
-  </form>
-</section>
+      <h3>Productos añadidos:</h3>
+      <ul id="lista-pedido"></ul>
+
+      <button type="submit">Enviar pedido</button>
+    </form>
+  </section>
 
   <footer>
     <p>© 2025 El Libro y el Expreso. Todos los derechos reservados.</p>
@@ -161,4 +125,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
