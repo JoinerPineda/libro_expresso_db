@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>El Libro y el Expreso</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header>
+    <h1>El Libro y el Expreso</h1>
+    <p>Un rincón para el café, los libros y el alma</p>
+  </header>
+
+  <div class="menu-toggle" onclick="toggleMenu()">☰ Menú</div>
+
+  <nav id="menu">
+    <a href="#">Inicio</a>
+    <a href="#nosotros">Sobre Nosotros</a>
+    <a href="#carta">Menú</a>
+    <a href="#">Galería</a>
+    <a href="#">Contacto</a>
+  </nav>
+
+  <!-- Carrusel de productos -->
+  <section id="carrusel">
+    <div class="carrusel-contenedor">
+      <div class="carrusel-item activo">
+        <img src="https://images.unsplash.com/photo-1608363087711-9280f549a29e?q=80&w=2010&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Café Espresso" class="carrusel-imagen" />
+        <div class="carrusel-texto">
+          <h3>Café Espresso</h3>
+          <p>$1.500</p>
+        </div>
+      </div>
+      <div class="carrusel-item">
+        <img src="https://images.unsplash.com/photo-1561113862-d64220af508f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Capuchino" class="carrusel-imagen" />
+        <div class="carrusel-texto">
+          <h3>Capuchino</h3>
+          <p>$3.000</p>
+        </div>
+      </div>
+      <div class="carrusel-item">
+        <img src="https://images.pexels.com/photos/32288133/pexels-photo-32288133.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Pastel de Zanahoria" class="carrusel-imagen" />
+        <div class="carrusel-texto">
+          <h3>Tiramisu</h3>
+          <p>$5.000</p>
+        </div>
+      </div>
+      <div class="carrusel-item">
+        <img src="https://images.unsplash.com/photo-1567922045116-2a00fae2ed03?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Té Verde" class="carrusel-imagen" />
+        <div class="carrusel-texto">
+          <h3>Té</h3>
+          <p>$2.500</p>
+        </div>
+      </div>
+    </div>
+    <button class="carrusel-btn prev" onclick="moverCarrusel(-1)">&#10094;</button>
+    <button class="carrusel-btn next" onclick="moverCarrusel(1)">&#10095;</button>
+  </section>
+
+  <section id="nosotros">
+    <h2>Sobre Nosotros</h2>
+    <div class="sobre-nosotros">
+      <p>
+        En <strong>El Libro y el Expreso</strong>, creemos que cada taza de café cuenta una historia, y cada página leída es un viaje.
+        Creamos este lugar como refugio para los amantes del café, los libros y la tranquilidad.
+        ¡Bienvenido a tu segundo hogar!
+      </p>
+    </div>
+  </section>
+
+  <section id="carta">
+    <h2>Nuestro Menú</h2>
+    <button class="boton-menu" onclick="toggleOpcionesMenu()">📋 Ver menú</button>
+
+    <div id="opciones-menu" class="menu-oculto">
+      <div class="categoria" onclick="mostrarSubmenu('cafes')">☕ Cafés</div>
+      <ul id="submenu-cafes" class="submenu">
+        <li>Espresso - $5.000</li>
+        <li>Capuchino - $6.500</li>
+        <li>Latte - $6.000</li>
+      </ul>
+
+      <div class="categoria" onclick="mostrarSubmenu('pasteleria')">🥐 Pastelería</div>
+      <ul id="submenu-pasteleria" class="submenu">
+        <li>Croissant - $4.000</li>
+        <li>Torta de chocolate - $6.500</li>
+        <li>Cheesecake - $7.000</li>
+      </ul>
+
+      <div class="categoria" onclick="mostrarSubmenu('tes')">🍵 Tés e Infusiones</div>
+      <ul id="submenu-tes" class="submenu">
+        <li>Té verde - $4.000</li>
+        <li>Manzanilla - $4.000</li>
+        <li>Infusión de frutas - $4.500</li>
+      </ul>
+
+      <div class="categoria" onclick="mostrarSubmenu('frias')">🧃 Bebidas Frías</div>
+      <ul id="submenu-frias" class="submenu">
+        <li>Jugo natural - $5.000</li>
+        <li>Limonada - $4.500</li>
+        <li>Té helado - $5.000</li>
+      </ul>
+    </div>
+  </section>
+  <header>
+  <div class="header-container">
+    <h1>El Libro y el Expreso</h1>
+    <button id="btn-domicilios" onclick="toggleDomicilios()">¡Pide tu domicilio aquí!</button>
+  </div>
+  <p>Un rincón para el café, los libros y el alma</p>
+</header>
+
+<!-- Tu sección de domicilios (puede ir justo antes del footer o donde quieras) -->
+<section id="domicilios" class="domicilios-oculto">
+  <h2>Formulario para domicilios</h2>
+  <form>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required />
+
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" name="direccion" required />
+
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono" required />
+    
+    <form id="form-domicilios">
+  <!-- Otros campos... -->
+
+  <label for="categoria">Selecciona categoría:</label>
+  <select id="categoria" name="categoria" required>
+    <option value="" disabled selected>-- Escoge una categoría --</option>
+    <option value="cafe">Café</option>
+    <option value="pasteleria">Pastelería</option>
+    <option value="tes">Tés e Infusiones</option>
+    <option value="bebidas">Bebidas Frías</option>
+  </select>
+
+  <label for="producto">Selecciona producto:</label>
+  <select id="producto" name="producto" required disabled>
+    <option value="" disabled selected>-- Escoge primero categoría --</option>
+  </select>
+
+  <button type="button" id="agregar-producto">Agregar producto</button>
+
+  <h3>Productos añadidos:</h3>
+  <ul id="lista-pedido"></ul>
+
+  <!-- Botón enviar -->
+  <button type="submit">Enviar pedido</button>
+</form>
+
+  </form>
+</section>
+
+  <footer>
+    <p>© 2025 El Libro y el Expreso. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

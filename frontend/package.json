@@ -1,0 +1,26 @@
+{
+  "name": "el-libro-y-el-expresso",
+  "version": "1.0.0",
+  "description": "Café literario donde los usuarios pueden pedir café, comida y explorar libros.",
+  "main": "src/scripts/app.js",
+  "scripts": {
+    "start": "live-server src",
+    "build": "webpack --mode production"
+  },
+  "keywords": [
+    "café",
+    "literatura",
+    "libros",
+    "comida"
+  ],
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "dependencies": {
+    "live-server": "^1.2.1",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^4.6.0"
+  }
+}
