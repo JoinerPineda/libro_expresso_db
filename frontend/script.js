@@ -1,4 +1,7 @@
 const BASIC_URL = 'http://localhost:3000/api';
+const form = document.getElementById('form-domicilios');
+let productosAgregados = [];
+let productosDisponibles = [];
 
 function toggleMenu() {
   const menu = document.getElementById('menu');
@@ -47,6 +50,12 @@ async function cargarCategorias() {
     const contenedorMenu = document.getElementById('opciones-menu');
 
     categorias.forEach(cat => {
+      // Agregar opciones al select
+      const option = document.createElement('option');
+      option.value = cat.id_categoria;
+      option.textContent = cat.nombre_categoria;
+      selectCategoria.appendChild(option);
+
       // Menú interactivo de carta
       const divCat = document.createElement('div');
       divCat.className = 'categoria';
@@ -90,6 +99,8 @@ async function cargarProductosPorCategoria(categoria, contenedor) {
     const productos = await res.json();
     contenedor.innerHTML = '';
 
+    productosDisponibles = [...productos];
+
     productos.forEach(prod => {
       const li = document.createElement('li');
       li.textContent = `${prod.nombre} - $${prod.precio}`;
@@ -111,6 +122,7 @@ const selectCategoria = document.getElementById('categoria');
 const selectProducto = document.getElementById('producto');
 const agregarBtn = document.getElementById('agregar-producto');
 const listaPedido = document.getElementById('lista-pedido');
+const cantidadInput = document.getElementById('cantidad');
 
 selectCategoria.addEventListener('change', async () => {
   const categoria = selectCategoria.value;
@@ -136,26 +148,118 @@ selectCategoria.addEventListener('change', async () => {
   }
 });
 
-agregarBtn.addEventListener('click', () => {
-  const productoSeleccionado = selectProducto.options[selectProducto.selectedIndex];
-  if (!productoSeleccionado || selectProducto.disabled) {
-    alert('Por favor selecciona un producto válido.');
+// obtener producto por su id
+async function obtenerProductoPorId(id) {
+  try {
+    const res = await fetch(`${BASIC_URL}/productos/${id}`);
+    if (!res.ok) throw new Error('Producto no encontrado');
+    return await res.json();
+  } catch (e) {
+    console.error('Error obteniendo producto:', e);
+    return null;
+  }
+}
+
+// Agregar producto al pedido
+agregarBtn.addEventListener('click', async () => {
+  const idProducto = selectProducto.value;
+  const cantidad = parseInt(cantidadInput.value);
+
+  if (isNaN(cantidad) || cantidad <= 0) {
+    alert('❌ Cantidad inválida. Debe ser un número mayor a 0.');
     return;
   }
 
-  const li = document.createElement('li');
-  li.textContent = productoSeleccionado.textContent;
+  const producto = await obtenerProductoPorId(idProducto);
 
-  const btnEliminar = document.createElement('button');
-  btnEliminar.textContent = 'Eliminar';
-  btnEliminar.style.marginLeft = '10px';
-  btnEliminar.style.backgroundColor = '#c66';
-  btnEliminar.style.border = 'none';
-  btnEliminar.style.color = 'white';
-  btnEliminar.style.borderRadius = '6px';
-  btnEliminar.style.cursor = 'pointer';
-  btnEliminar.onclick = () => li.remove();
+  if (!producto) {
+    alert('❌ Producto no encontrado.');
+    return;
+  }
 
-  li.appendChild(btnEliminar);
-  listaPedido.appendChild(li);
+  const yaAgregado = productosAgregados.find(p => p.id_producto == idProducto);
+  if (yaAgregado) {
+    yaAgregado.cantidad += cantidad;
+  } else {
+    productosAgregados.push({
+      id_producto: producto.id,
+      nombre: producto.nombre,
+      cantidad: cantidad,
+      precio_unitario: producto.precio
+    });
+  }
+
+  actualizarListaPedido();
+});
+
+// Mostrar lista de productos agregados
+function actualizarListaPedido() {
+  listaPedido.innerHTML = '';
+
+  productosAgregados.forEach(p => {
+    const li = document.createElement('li');
+
+    const btnEliminar = document.createElement('button');
+    btnEliminar.textContent = 'Eliminar';
+    btnEliminar.className = 'btn-eliminar';
+    btnEliminar.onclick = () => removerProducto(p.id_producto);
+
+    li.textContent = `${p.nombre} - Cantidad: ${p.cantidad}`;
+    li.appendChild(btnEliminar);
+    
+    listaPedido.appendChild(li);
+  });
+}
+
+function removerProducto(idProducto) {
+  productosAgregados = productosAgregados.filter(p => p.id_producto != idProducto);
+  actualizarListaPedido();
+}
+
+
+// Enviar pedido
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  if (productosAgregados.length === 0) {
+    alert('Debe agregar al menos un producto al pedido.');
+    return;
+  }
+
+  const cliente = {
+    nombre: document.getElementById('nombre').value,
+    correo: document.getElementById('correo').value,
+    direccion: document.getElementById('direccion').value,
+    telefono: document.getElementById('telefono').value
+  };
+
+  const datos = {
+    cliente: cliente,
+    productos: productosAgregados
+  };
+
+  try {
+    const res = await fetch(`${BASIC_URL}/pedidos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(datos)
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+      alert(`✅ Pedido realizado con éxito. Código: ${result.id_pedido}`);
+      form.reset();
+      productosAgregados = [];
+      actualizarListaPedido();
+      selectProducto.disabled = true;
+    } else {
+      alert('❌ Error al realizar el pedido: ' + result.error);
+    }
+  } catch (error) {
+    alert('❌ Error de red al enviar el pedido.');
+    console.error(error);
+  }
 });
