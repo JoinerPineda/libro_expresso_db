@@ -3,16 +3,19 @@ const form = document.getElementById('form-domicilios');
 let productosAgregados = [];
 let productosDisponibles = [];
 
+
 function toggleMenu() {
   const menu = document.getElementById('menu');
   menu.classList.toggle('open');
 }
 
+// Mostrar/ocultar menú interactivo de productos
 function toggleOpcionesMenu() {
   const opciones = document.getElementById('opciones-menu');
   opciones.style.display = opciones.style.display === 'block' ? 'none' : 'block';
 }
 
+// Carrusel de imágenes
 let indiceActual = 0;
 const items = document.querySelectorAll('.carrusel-item');
 
@@ -30,6 +33,10 @@ function moverCarrusel(direccion) {
   mostrarImagen(indiceActual + direccion);
 }
 
+setInterval(() => {
+  moverCarrusel(1); // Avanza una imagen hacia la derecha
+}, 5000); // Cada 5 segundos
+
 document.addEventListener('DOMContentLoaded', async () => {
   mostrarImagen(indiceActual);
   await cargarCategorias();
@@ -41,6 +48,7 @@ function toggleDomicilios() {
   seccion.classList.toggle('domicilios-oculto');
 }
 
+// Cargar categorías y productos al inicio
 async function cargarCategorias() {
   try {
     const res = await fetch(BASIC_URL + '/categorias');

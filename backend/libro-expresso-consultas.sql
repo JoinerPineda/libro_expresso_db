@@ -24,6 +24,7 @@ CREATE TABLE clientes (
   telefono VARCHAR(20) NOT NULL
 );
 
+
 CREATE TABLE pedidos (
   id_pedido INT AUTO_INCREMENT PRIMARY KEY,
   id_cliente INT,
@@ -40,6 +41,8 @@ CREATE TABLE detalle_pedido (
   FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido),
   FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
 );
+
+
 
 INSERT INTO categorias (nombre_categoria) VALUES
 ('Cafés'),
